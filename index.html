@@ -495,9 +495,9 @@ Free Bootstrap 5 HTML Template
                                     </div>
                                 </div>
             
-                                <h5 class="mb-4">We hope you can attend <span class="text-muted">Please reserve before September 20th, 2024</span></h5>
+                                <h5 class="mb-4">We hope you can attend. <span class="text-muted">Please reserve before September 20th, 2024</span></h5>
             
-                                <form class="custom-form rsvp-form" role="form" action="https://script.google.com/macros/s/AKfycbwXqwOp28HH85SnI3ocXYMqEbkT8zrH84dIV2ciHo4tkVxMUd6OpuYzuxbTsPikkMc/exec" method="post" id="rsvp-form">
+                                <form name="submit-to-google-sheet" class="custom-form rsvp-form" role="form" method="post" id="rsvp-form">
                                     <div class="row">
                                         <div class="col-lg-4 col-md-6 col-12">
                                             <input type="text" name="name" id="name" class="form-control" placeholder="Full Name*" required="">
@@ -509,7 +509,7 @@ Free Bootstrap 5 HTML Template
             
                                         <div class="col-lg-4 col-12"> 
                                             <select name="guests" class="form-select" id="guests" aria-label="Guests">
-                                                <option selected>Number of Guests</option>
+                                                <option selected>Number of Guests (incl. yourself)</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -530,15 +530,27 @@ Free Bootstrap 5 HTML Template
                                         <div class="col-lg-3 col-5 mx-auto">
                                             <button type="submit" class="form-control">Send Invitation</button>
                                         </div>
-            
                                     </div>
                                 </form>
+            
                             </div>
                         </div>
             
                     </div>
                 </div>
             </section>
+            
+            <script>
+              const scriptURL = 'https://script.google.com/macros/s/AKfycbx5PxrpJ-88QeEtV2SflZ0CgmoPVOI_n03ZUYf60DqAgB0FUXV7VhYgdZFSbJYwWFkyEg/exec'
+              const form = document.forms['submit-to-google-sheet']
+            
+              form.addEventListener('submit', e => {
+                e.preventDefault()
+                fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                  .then(response => console.log('Success!', response))
+                  .catch(error => console.error('Error!', error.message))
+              })
+            </script>
             
 
             <section class="contact-section section-bg section-padding" id="section_7">
