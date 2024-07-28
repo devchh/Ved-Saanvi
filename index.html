@@ -483,7 +483,6 @@ Free Bootstrap 5 HTML Template
             <section class="rsvp-section section-padding" id="section_6">
                 <div class="container">
                     <div class="row">
-            
                         <div class="col-lg-8 col-12 mx-auto">
                             <div class="rsvp-form-wrap">
                                 <div class="section-title-wrap mb-5">
@@ -494,22 +493,18 @@ Free Bootstrap 5 HTML Template
                                         <span class="section-title-line"></span>
                                     </div>
                                 </div>
-            
-                                <h5 class="mb-4">We hope you can attend. <span class="text-muted">Please reserve before September 20th, 2024</span></h5>
-            
-                                <form name="submit-to-google-sheet" class="custom-form rsvp-form" role="form" method="post" id="rsvp-form">
+                                <h5 class="mb-4">We hope you can attend <span class="text-muted">Please reserve before September 20th, 2024</span></h5>
+                                <form action="https://api.sheetmonkey.io/form/qSXdcs9yohfJTq7SL6WxF2" method="post" class="custom-form rsvp-form" role="form" id="rsvp-form">
                                     <div class="row">
                                         <div class="col-lg-4 col-md-6 col-12">
-                                            <input type="text" name="name" id="name" class="form-control" placeholder="Full Name*" required="">
+                                            <input type="text" name="Name" id="fullName" class="form-control" placeholder="Full Name*" required>
                                         </div>
-            
-                                        <div class="col-lg-4 col-md-6 col-12"> 
-                                            <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Email Address*" required="">
+                                        <div class="col-lg-4 col-md-6 col-12">
+                                            <input type="email" name="Email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Email Address*" required>
                                         </div>
-            
-                                        <div class="col-lg-4 col-12"> 
-                                            <select name="guests" class="form-select" id="guests" aria-label="Guests">
-                                                <option selected>Number of Guests (incl. yourself)</option>
+                                        <div class="col-lg-4 col-12">
+                                            <select name="Guests" class="form-select" id="guests" aria-label="Guests" required>
+                                                <option value="" disabled selected>Number of Guests</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -522,35 +517,20 @@ Free Bootstrap 5 HTML Template
                                                 <option value="10">10</option>
                                             </select>
                                         </div>
-            
                                         <div class="col-lg-12 col-12">
-                                            <textarea class="form-control" id="message" name="message" placeholder="Message (Optional)" rows="5"></textarea>
+                                            <textarea class="form-control" id="message" name="Message" placeholder="Message (Optional)" rows="5"></textarea>
                                         </div>
-            
                                         <div class="col-lg-3 col-5 mx-auto">
+                                            <input type="hidden" name="Created" value="x-sheetmonkey-current-date-time">
                                             <button type="submit" class="form-control">Send Invitation</button>
                                         </div>
                                     </div>
                                 </form>
-            
                             </div>
                         </div>
-            
                     </div>
                 </div>
             </section>
-            
-            <script>
-              const scriptURL = 'https://script.google.com/macros/s/AKfycbx5PxrpJ-88QeEtV2SflZ0CgmoPVOI_n03ZUYf60DqAgB0FUXV7VhYgdZFSbJYwWFkyEg/exec'
-              const form = document.forms['submit-to-google-sheet']
-            
-              form.addEventListener('submit', e => {
-                e.preventDefault()
-                fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                  .then(response => console.log('Success!', response))
-                  .catch(error => console.error('Error!', error.message))
-              })
-            </script>
             
 
             <section class="contact-section section-bg section-padding" id="section_7">
