@@ -34,39 +34,44 @@
 
 })(window.jQuery);
 
-document.getElementById('rsvp-form').addEventListener('submit', function(e) {
-  e.preventDefault();
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.forms['submit-to-google-sheet'];
+  const scriptURL = 'https://api.sheetmonkey.io/form/qSXdcs9yohfJTq7SL6WxF2';
 
-  var form = e.target;
-  var formData = new FormData(form);
-  var data = {};
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-  formData.forEach((value, key) => {
-    data[key] = value;
-  });
+    var formData = new FormData(form);
 
-  console.log('Form Data:', data); // Debugging line to check form data
+    console.log('Form Data:', Array.from(formData.entries())); // Debugging line to check form data
 
-  fetch(form.action, {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(responseData => {
-    console.log('Response Data:', responseData); // Debugging line to check response data
-    if (responseData.result === "success") {
-      alert("RSVP submitted successfully!");
-      form.reset();
-    } else {
+    fetch(scriptURL, {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.text()) // Read the response as text
+    .then(responseText => {
+      console.log('Response Text:', responseText); // Debugging line to check response text
+      let responseData;
+      try {
+        responseData = JSON.parse(responseText); // Try to parse as JSON
+      } catch (e) {
+        console.error('Error parsing JSON:', e); // Catch JSON parsing errors
+        alert("There was an error processing the server response.");
+        return;
+      }
+
+      console.log('Response Data:', responseData); // Debugging line to check parsed response data
+      if (responseData.success) { // Assuming Sheet Monkey returns a success field in response
+        alert("RSVP submitted successfully!");
+        form.reset();
+      } else {
+        alert("There was an error submitting your RSVP.");
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
       alert("There was an error submitting your RSVP.");
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    alert("There was an error submitting your RSVP.");
+    });
   });
 });
